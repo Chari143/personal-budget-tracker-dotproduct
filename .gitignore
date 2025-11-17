@@ -1,11 +1,9 @@
 /.venv
 /backend/BACKEND_STEP_BY_STEP.md
-/assessments.txt
 /assessment.txt
 /frontend/.next
 /frontend/FRONTEND_STEP_BY_STEP.md
 /frontend/node_modules
 /.DS_Store
-/backend/.env
 /backend/__pycache__/
 *.pyc
