@@ -1,4 +1,4 @@
-# Personal Budget Tracker (Beginner README)
+# Personal Budget Tracker
 
 This is a simple full‑stack personal budget tracker.
 - Backend: Django REST Framework (JWT auth)
