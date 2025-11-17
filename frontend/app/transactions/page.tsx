@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react"
 import dynamic from "next/dynamic"
 const NavbarContainer = dynamic(() => import("@/components/navbar-container"), { ssr: false })
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://127.0.0.1:8000"
+const API_BASE = (process.env.NEXT_PUBLIC_API_BASE || "http://193.53.40.63:8000/")
 
 type Category = { id: number; name: string; type?: "income" | "expense" }
 type Transaction = { id: number; date: string; amount: number | string; description: string; category?: number | { name: string } }
@@ -28,7 +28,7 @@ export default function TransactionsPage() {
 
   function load() {
     const q = qs(filters)
-    fetch(`/api/proxy/api/transactions/?${q}`, { headers: { Authorization: `Bearer ${token()}` }})
+    fetch(`${API_BASE}/api/transactions/?${q}`, { headers: { Authorization: `Bearer ${token()}` }})
       .then(r=>r.json()).then(j=>{
         const arr = Array.isArray(j) ? j : (j.results || [])
         setItems(arr)
@@ -36,7 +36,7 @@ export default function TransactionsPage() {
   }
 
   function loadCategories() {
-    fetch(`/api/proxy/api/categories/`, { headers: { Authorization: `Bearer ${token()}`}})
+    fetch(`${API_BASE}/api/categories/`, { headers: { Authorization: `Bearer ${token()}`}})
       .then(r=>r.json()).then(j=>{ setCategories(Array.isArray(j)?j:(j.results||[])) })
   }
 
@@ -44,7 +44,7 @@ export default function TransactionsPage() {
   useEffect(() => { load() }, [page, filters])
 
   async function add() {
-    const res = await fetch(`/api/proxy/api/transactions/`, {
+    const res = await fetch(`${API_BASE}/api/transactions/`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token()}` },
       body: JSON.stringify(form)
@@ -56,7 +56,7 @@ export default function TransactionsPage() {
   }
 
   async function del(id:number) {
-    const res = await fetch(`/api/proxy/api/transactions/${id}/`, { method: "DELETE", headers: { Authorization: `Bearer ${token()}` }})
+    const res = await fetch(`${API_BASE}/api/transactions/${id}/`, { method: "DELETE", headers: { Authorization: `Bearer ${token()}` }})
     if (res.ok) load()
   }
 

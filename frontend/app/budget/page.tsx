@@ -4,7 +4,7 @@ import * as d3 from "d3"
 import dynamic from "next/dynamic"
 const NavbarContainer = dynamic(() => import("@/components/navbar-container"), { ssr: false })
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://127.0.0.1:8000"
+const API_BASE = (process.env.NEXT_PUBLIC_API_BASE || "http://193.53.40.63:8000/")
 
 export default function BudgetPage() {
   const [amount, setAmount] = useState("")
@@ -17,13 +17,13 @@ export default function BudgetPage() {
   }
 
   function fetchCurrent() {
-    fetch(`/api/proxy/api/budgets/current/`, { headers: { Authorization: `Bearer ${token()}` }})
+    fetch(`${API_BASE}/api/budgets/current/`, { headers: { Authorization: `Bearer ${token()}` }})
       .then(r=>r.json()).then(setCurrent)
   }
 
   useEffect(() => {
     fetchCurrent()
-    fetch(`/api/proxy/api/summary/`, { headers: { Authorization: `Bearer ${token()}`}})
+    fetch(`${API_BASE}/api/summary/`, { headers: { Authorization: `Bearer ${token()}`}})
       .then(r=>r.json()).then(j=>setSpent(Number(j.month_expenses||0)))
   }, [])
 
@@ -59,7 +59,7 @@ export default function BudgetPage() {
   async function save() {
     const now = new Date()
     const body = { year: now.getFullYear(), month: now.getMonth()+1, amount }
-    const res = await fetch(`/api/proxy/api/budgets/set_current/`, {
+    const res = await fetch(`${API_BASE}/api/budgets/set_current/`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token()}` },
       body: JSON.stringify(body)

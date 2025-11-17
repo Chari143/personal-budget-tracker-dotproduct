@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import dynamic from "next/dynamic"
 const NavbarContainer = dynamic(() => import("@/components/navbar-container"), { ssr: false })
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://127.0.0.1:8000"
+const API_BASE = (process.env.NEXT_PUBLIC_API_BASE || "http://193.53.40.63:8000/")
 
 type Category = { id: number; name: string; type: "income" | "expense" }
 
@@ -18,7 +18,7 @@ export default function CategoriesPage() {
   }
 
   function load() {
-    fetch(`/api/proxy/api/categories/`, { headers: { Authorization: `Bearer ${token()}`}})
+    fetch(`${API_BASE}/api/categories/`, { headers: { Authorization: `Bearer ${token()}`}})
       .then(r=>r.json()).then(j=>{
         const arr = Array.isArray(j) ? j : (j.results || [])
         setItems(arr)
@@ -28,7 +28,7 @@ export default function CategoriesPage() {
   useEffect(() => { load() }, [])
 
   async function add() {
-    const res = await fetch(`/api/proxy/api/categories/`, {
+    const res = await fetch(`${API_BASE}/api/categories/`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token()}` },
       body: JSON.stringify({ name, type })
@@ -40,7 +40,7 @@ export default function CategoriesPage() {
   }
 
   async function del(id: number) {
-    const res = await fetch(`/api/proxy/api/categories/${id}/`, {
+    const res = await fetch(`${API_BASE}/api/categories/${id}/`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token()}` },
     })

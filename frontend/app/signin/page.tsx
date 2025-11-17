@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react"
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://127.0.0.1:8000"
+const API_BASE = (process.env.NEXT_PUBLIC_API_BASE || "http://193.53.40.63:8000/")
 
 export default function SignInPage() {
   const [username, setUsername] = useState("")
@@ -14,7 +14,7 @@ export default function SignInPage() {
     setError("")
     setLoading(true)
     try {
-      const res = await fetch(`/api/proxy/api/auth/token/`, {
+      const res = await fetch(`${API_BASE}/api/auth/token/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password })

@@ -4,7 +4,7 @@ import * as d3 from "d3"
 import dynamic from "next/dynamic"
 const NavbarContainer = dynamic(() => import("@/components/navbar-container"), { ssr: false })
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://127.0.0.1:8000"
+const API_BASE = (process.env.NEXT_PUBLIC_API_BASE || "http://193.53.40.63:8000/")
 
 export default function DashboardPage() {
   const [data, setData] = useState<{total_income:number,total_expenses:number,balance:number,month_expenses:number,month_budget:number}|null>(null)
@@ -14,7 +14,7 @@ export default function DashboardPage() {
   useEffect(() => {
     const token = document.cookie.split(";").find(c=>c.trim().startsWith("access="))?.split("=")[1] || ""
     if (!token) return
-    fetch(`/api/proxy/api/summary/`, { headers: { Authorization: `Bearer ${token}` }})
+    fetch(`${API_BASE}/api/summary/`, { headers: { Authorization: `Bearer ${token}` }})
       .then(r=>r.json())
       .then(json=>setData({
         total_income:Number(json.total_income||0),
