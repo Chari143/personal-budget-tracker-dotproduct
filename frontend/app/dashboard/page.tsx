@@ -14,7 +14,7 @@ export default function DashboardPage() {
   useEffect(() => {
     const token = document.cookie.split(";").find(c=>c.trim().startsWith("access="))?.split("=")[1] || ""
     if (!token) return
-    fetch(`${API_BASE}/api/summary/`, { headers: { Authorization: `Bearer ${token}` }})
+    fetch(`/api/proxy/api/summary/`, { headers: { Authorization: `Bearer ${token}` }})
       .then(r=>r.json())
       .then(json=>setData({
         total_income:Number(json.total_income||0),

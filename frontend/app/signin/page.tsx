@@ -14,7 +14,7 @@ export default function SignInPage() {
     setError("")
     setLoading(true)
     try {
-      const res = await fetch(`${API_BASE}/api/auth/token/`, {
+      const res = await fetch(`/api/proxy/api/auth/token/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password })

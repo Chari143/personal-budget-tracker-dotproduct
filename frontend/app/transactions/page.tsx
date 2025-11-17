@@ -28,7 +28,7 @@ export default function TransactionsPage() {
 
   function load() {
     const q = qs(filters)
-    fetch(`${API_BASE}/api/transactions/?${q}`, { headers: { Authorization: `Bearer ${token()}` }})
+    fetch(`/api/proxy/api/transactions/?${q}`, { headers: { Authorization: `Bearer ${token()}` }})
       .then(r=>r.json()).then(j=>{
         const arr = Array.isArray(j) ? j : (j.results || [])
         setItems(arr)
@@ -36,7 +36,7 @@ export default function TransactionsPage() {
   }
 
   function loadCategories() {
-    fetch(`${API_BASE}/api/categories/`, { headers: { Authorization: `Bearer ${token()}`}})
+    fetch(`/api/proxy/api/categories/`, { headers: { Authorization: `Bearer ${token()}`}})
       .then(r=>r.json()).then(j=>{ setCategories(Array.isArray(j)?j:(j.results||[])) })
   }
 
@@ -44,7 +44,7 @@ export default function TransactionsPage() {
   useEffect(() => { load() }, [page, filters])
 
   async function add() {
-    const res = await fetch(`${API_BASE}/api/transactions/`, {
+    const res = await fetch(`/api/proxy/api/transactions/`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token()}` },
       body: JSON.stringify(form)
@@ -56,7 +56,7 @@ export default function TransactionsPage() {
   }
 
   async function del(id:number) {
-    const res = await fetch(`${API_BASE}/api/transactions/${id}/`, { method: "DELETE", headers: { Authorization: `Bearer ${token()}` }})
+    const res = await fetch(`/api/proxy/api/transactions/${id}/`, { method: "DELETE", headers: { Authorization: `Bearer ${token()}` }})
     if (res.ok) load()
   }
 

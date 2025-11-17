@@ -17,13 +17,13 @@ export default function BudgetPage() {
   }
 
   function fetchCurrent() {
-    fetch(`${API_BASE}/api/budgets/current/`, { headers: { Authorization: `Bearer ${token()}` }})
+    fetch(`/api/proxy/api/budgets/current/`, { headers: { Authorization: `Bearer ${token()}` }})
       .then(r=>r.json()).then(setCurrent)
   }
 
   useEffect(() => {
     fetchCurrent()
-    fetch(`${API_BASE}/api/summary/`, { headers: { Authorization: `Bearer ${token()}`}})
+    fetch(`/api/proxy/api/summary/`, { headers: { Authorization: `Bearer ${token()}`}})
       .then(r=>r.json()).then(j=>setSpent(Number(j.month_expenses||0)))
   }, [])
 
@@ -59,7 +59,7 @@ export default function BudgetPage() {
   async function save() {
     const now = new Date()
     const body = { year: now.getFullYear(), month: now.getMonth()+1, amount }
-    const res = await fetch(`${API_BASE}/api/budgets/set_current/`, {
+    const res = await fetch(`/api/proxy/api/budgets/set_current/`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token()}` },
       body: JSON.stringify(body)

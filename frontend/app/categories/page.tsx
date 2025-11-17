@@ -18,7 +18,7 @@ export default function CategoriesPage() {
   }
 
   function load() {
-    fetch(`${API_BASE}/api/categories/`, { headers: { Authorization: `Bearer ${token()}`}})
+    fetch(`/api/proxy/api/categories/`, { headers: { Authorization: `Bearer ${token()}`}})
       .then(r=>r.json()).then(j=>{
         const arr = Array.isArray(j) ? j : (j.results || [])
         setItems(arr)
@@ -28,7 +28,7 @@ export default function CategoriesPage() {
   useEffect(() => { load() }, [])
 
   async function add() {
-    const res = await fetch(`${API_BASE}/api/categories/`, {
+    const res = await fetch(`/api/proxy/api/categories/`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token()}` },
       body: JSON.stringify({ name, type })
@@ -40,7 +40,7 @@ export default function CategoriesPage() {
   }
 
   async function del(id: number) {
-    const res = await fetch(`${API_BASE}/api/categories/${id}/`, {
+    const res = await fetch(`/api/proxy/api/categories/${id}/`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token()}` },
     })
