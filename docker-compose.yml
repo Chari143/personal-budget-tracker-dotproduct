@@ -12,5 +12,27 @@ services:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
 
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: budget-backend
+    environment:
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY:-dev}
+      - DJANGO_DEBUG=${DJANGO_DEBUG:-false}
+      - DB_NAME=${DB_NAME:-budgetdb}
+      - DB_USER=${DB_USER:-budgetuser}
+      - DB_PASSWORD=${DB_PASSWORD:-budgetpass}
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-https://personal-budget-tracker-dotproduct-adlyudlmk-chari143s-projects.vercel.app}
+      - DEFAULT_USER_EMAIL=${DEFAULT_USER_EMAIL:-test@example.com}
+      - DEFAULT_USER_PASSWORD=${DEFAULT_USER_PASSWORD:-password123}
+    depends_on:
+      - postgres
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
 volumes:
   postgres_data:
