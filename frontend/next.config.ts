@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  env: {
+    NEXT_PUBLIC_API_BASE: "http://193.53.40.63:8000"
+  }
 };
 
 export default nextConfig;
