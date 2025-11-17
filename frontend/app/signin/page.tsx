@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react"
 
-const API_BASE = (process.env.NEXT_PUBLIC_API_BASE || "http://193.53.40.63:8000/")
+const API_BASE = (process.env.NEXT_PUBLIC_API_BASE || "http://193.53.40.63:8000/").replace(/\/$/, "")
 
 export default function SignInPage() {
   const [username, setUsername] = useState("")

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import dynamic from "next/dynamic"
 const NavbarContainer = dynamic(() => import("@/components/navbar-container"), { ssr: false })
 
-const API_BASE = (process.env.NEXT_PUBLIC_API_BASE || "http://193.53.40.63:8000/")
+const API_BASE = (process.env.NEXT_PUBLIC_API_BASE || "http://193.53.40.63:8000/").replace(/\/$/, "")
 
 type Category = { id: number; name: string; type: "income" | "expense" }
 

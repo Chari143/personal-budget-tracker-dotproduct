@@ -4,7 +4,7 @@ import * as d3 from "d3"
 import dynamic from "next/dynamic"
 const NavbarContainer = dynamic(() => import("@/components/navbar-container"), { ssr: false })
 
-const API_BASE = (process.env.NEXT_PUBLIC_API_BASE || "http://193.53.40.63:8000/")
+const API_BASE = (process.env.NEXT_PUBLIC_API_BASE || "http://193.53.40.63:8000/").replace(/\/$/, "")
 
 export default function DashboardPage() {
   const [data, setData] = useState<{total_income:number,total_expenses:number,balance:number,month_expenses:number,month_budget:number}|null>(null)
